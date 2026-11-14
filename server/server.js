@@ -12,7 +12,7 @@ const { validate } = require('./validate');
 const { generate } = require('./seed');
 
 const PORT = Number(process.env.PORT) || 3000;
-const HOST = process.env.HOST || '127.0.0.1';
+const HOST = process.env.HOST || '0.0.0.0';
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, '..', 'data');
 const DATA_FILE = path.join(DATA_DIR, 'bookings.json');
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
