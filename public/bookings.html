@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookings – WanderDesk</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="dashboard.html"><span aria-hidden="true">✈</span> WanderDesk</a>
+      <nav aria-label="Main">
+        <ul class="nav-list">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="bookings.html" aria-current="page">Bookings</a></li>
+          <li><a href="booking-form.html">New booking</a></li>
+        </ul>
+      </nav>
+      <div class="user-area">
+        <p class="user-name">Signed in as <strong id="user-name"></strong></p>
+        <button type="button" class="btn btn-on-dark btn-small" id="signout">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sr-only" id="live-polite" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <main id="main" class="wrap" tabindex="-1">
+    <div class="page-head">
+      <h1>Bookings</h1>
+      <a class="btn btn-primary" href="booking-form.html">New booking</a>
+    </div>
+
+    <div class="notice-area">
+      <div id="notice" role="status"></div>
+      <div id="notice-alert" role="alert"></div>
+    </div>
+
+    <form class="toolbar" id="filters" role="search" aria-label="Search and filter bookings">
+      <div class="field field-search">
+        <label for="q">Search bookings</label>
+        <p class="hint" id="q-hint">Matches reference, customer name, email or destination.</p>
+        <input type="search" id="q" name="q" autocomplete="off" aria-describedby="q-hint">
+      </div>
+      <div class="field">
+        <label for="f-status">Status</label>
+        <select id="f-status">
+          <option value="">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-payment">Payment</label>
+        <select id="f-payment">
+          <option value="">All payment states</option>
+          <option value="unpaid">Unpaid</option>
+          <option value="deposit">Deposit paid</option>
+          <option value="paid">Paid in full</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-dest">Destination</label>
+        <select id="f-dest">
+          <option value="">All destinations</option>
+          <option>Lisbon, Portugal</option>
+          <option>Kyoto, Japan</option>
+          <option>Marrakech, Morocco</option>
+          <option>Reykjavik, Iceland</option>
+          <option>Cape Town, South Africa</option>
+          <option>Istanbul, Turkey</option>
+          <option>Bali, Indonesia</option>
+          <option>Rome, Italy</option>
+          <option>Cusco, Peru</option>
+          <option>Vancouver, Canada</option>
+          <option>Dubai, UAE</option>
+          <option>Sydney, Australia</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-size">Rows per page</label>
+        <select id="f-size">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+      <div class="field toolbar-actions">
+        <button type="button" class="btn btn-secondary" id="clear">Clear filters</button>
+      </div>
+    </form>
+
+    <section aria-labelledby="results-heading">
+      <h2 id="results-heading" tabindex="-1">Results</h2>
+      <p class="result-count" id="result-count" role="status" aria-live="polite"></p>
+
+      <p class="loading" id="loading"><span class="spinner" aria-hidden="true"></span> Loading bookings…</p>
+
+      <div id="load-error" class="panel" hidden>
+        <h3>We couldn't load the bookings</h3>
+        <p id="load-error-text"></p>
+        <button type="button" class="btn btn-primary" id="retry">Try again</button>
+      </div>
+
+      <div class="table-wrap" id="table-wrap" hidden>
+        <table class="data-table" id="table">
+          <caption class="sr-only">Bookings. Use the column heading buttons to sort.</caption>
+          <thead>
+            <tr>
+              <th scope="col" aria-sort="none"><button type="button" class="sort-btn" data-sort="reference">Reference <span class="sort-icon" aria-hidden="true"></span></button></th>
+              <th scope="col" aria-sort="none"><button type="button" class="sort-btn" data-sort="customerName">Customer <span class="sort-icon" aria-hidden="true"></span></button></th>
+              <th scope="col" aria-sort="none"><button type="button" class="sort-btn" data-sort="destination">Destination <span class="sort-icon" aria-hidden="true"></span></button></th>
+              <th scope="col" aria-sort="none"><button type="button" class="sort-btn" data-sort="departureDate">Departs <span class="sort-icon" aria-hidden="true"></span></button></th>
+              <th scope="col" aria-sort="none"><button type="button" class="sort-btn" data-sort="travellers">Travellers <span class="sort-icon" aria-hidden="true"></span></button></th>
+              <th scope="col" aria-sort="none"><button type="button" class="sort-btn" data-sort="paymentStatus">Payment <span class="sort-icon" aria-hidden="true"></span></button></th>
+              <th scope="col" aria-sort="none"><button type="button" class="sort-btn" data-sort="status">Status <span class="sort-icon" aria-hidden="true"></span></button></th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="panel empty-state" id="empty" hidden>
+        <h3 id="empty-title"></h3>
+        <p id="empty-text"></p>
+        <a class="btn btn-primary" id="empty-add" href="booking-form.html" hidden>Add the first booking</a>
+        <button type="button" class="btn btn-primary" id="empty-clear" hidden>Clear filters</button>
+      </div>
+
+      <nav class="pagination" id="pagination" aria-label="Pagination" hidden>
+        <p id="page-info"></p>
+        <div class="pagination-buttons">
+          <button type="button" class="btn btn-secondary" id="prev">Previous<span class="sr-only"> page</span></button>
+          <button type="button" class="btn btn-secondary" id="next">Next<span class="sr-only"> page</span></button>
+        </div>
+      </nav>
+    </section>
+  </main>
+
+  <dialog id="confirm-dialog" aria-labelledby="dlg-title" aria-describedby="dlg-text">
+    <h2 id="dlg-title">Delete this booking?</h2>
+    <p id="dlg-text"></p>
+    <div class="btn-row">
+      <button type="button" class="btn btn-secondary" id="dlg-keep" autofocus>Keep booking</button>
+      <button type="button" class="btn btn-danger" id="dlg-delete">Delete booking</button>
+    </div>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>WanderDesk – coursework project for Accessibility and Usability. Demo data only.</p></div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/bookings.js"></script>
+</body>
+</html>

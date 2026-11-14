@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in – WanderDesk</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <p class="brand brand-plain"><span aria-hidden="true">✈</span> WanderDesk</p>
+    </div>
+  </header>
+
+  <div class="sr-only" id="live-polite" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <main id="main" class="wrap login-main" tabindex="-1">
+    <div class="card login-card">
+      <h1>Sign in to WanderDesk</h1>
+      <p class="lead">The booking desk for our travel agents and managers.</p>
+
+      <div class="notice-area">
+        <div id="notice" role="status"></div>
+        <div id="notice-alert" role="alert"></div>
+      </div>
+
+      <div id="error-summary" class="error-summary" tabindex="-1" aria-labelledby="error-summary-title" hidden>
+        <h2 id="error-summary-title">There is a problem</h2>
+        <ul id="error-summary-list"></ul>
+      </div>
+
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="username">Username <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="username" name="username" autocomplete="username" required
+                 aria-required="true" aria-describedby="username-error" autocapitalize="none" spellcheck="false">
+          <p class="field-error" id="username-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="password">Password <span class="req" aria-hidden="true">*</span></label>
+          <input type="password" id="password" name="password" autocomplete="current-password" required
+                 aria-required="true" aria-describedby="password-error">
+          <p class="field-error" id="password-error" hidden></p>
+        </div>
+
+        <div class="choice show-password">
+          <input type="checkbox" id="show-password">
+          <label for="show-password">Show password</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="login-btn">
+          <span class="spinner" id="login-spinner" aria-hidden="true" hidden></span>
+          <span id="login-btn-text">Sign in</span>
+        </button>
+      </form>
+
+      <div class="demo-box">
+        <p><strong>Demo accounts</strong> (sign-in is simulated)</p>
+        <p>Travel agent: <code>agent</code> / <code>agent123</code></p>
+        <p>Manager: <code>manager</code> / <code>manager123</code> (can also delete bookings)</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>WanderDesk – coursework project for Accessibility and Usability. Demo data only.</p></div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

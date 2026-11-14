@@ -1,0 +1,11 @@
+services:
+  wanderdesk:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - wanderdesk-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  wanderdesk-data:

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard – WanderDesk</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="dashboard.html"><span aria-hidden="true">✈</span> WanderDesk</a>
+      <nav aria-label="Main">
+        <ul class="nav-list">
+          <li><a href="dashboard.html" aria-current="page">Dashboard</a></li>
+          <li><a href="bookings.html">Bookings</a></li>
+          <li><a href="booking-form.html">New booking</a></li>
+        </ul>
+      </nav>
+      <div class="user-area">
+        <p class="user-name">Signed in as <strong id="user-name"></strong></p>
+        <button type="button" class="btn btn-on-dark btn-small" id="signout">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sr-only" id="live-polite" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <main id="main" class="wrap" tabindex="-1">
+    <h1>Dashboard</h1>
+    <p class="lead" id="welcome"></p>
+
+    <div class="notice-area">
+      <div id="notice" role="status"></div>
+      <div id="notice-alert" role="alert"></div>
+    </div>
+
+    <p class="loading" id="dash-loading"><span class="spinner" aria-hidden="true"></span> Loading today's summary…</p>
+
+    <div id="dash-error" class="panel" hidden>
+      <h2>We couldn't load the summary</h2>
+      <p id="dash-error-text"></p>
+      <button type="button" class="btn btn-primary" id="dash-retry">Try again</button>
+    </div>
+
+    <div id="dash-content" hidden>
+      <section class="section section-first" aria-labelledby="glance-h">
+        <h2 id="glance-h">At a glance</h2>
+        <dl class="stat-grid">
+          <div class="stat">
+            <dt>All bookings</dt>
+            <dd><span class="stat-num" id="s-total">0</span></dd>
+            <dd><a class="stat-link" href="bookings.html?status=&amp;payment=">View all<span class="sr-only"> bookings</span></a></dd>
+          </div>
+          <div class="stat">
+            <dt>Confirmed</dt>
+            <dd><span class="stat-num" id="s-confirmed">0</span></dd>
+            <dd><a class="stat-link" href="bookings.html?status=confirmed&amp;payment=">View<span class="sr-only"> confirmed bookings</span></a></dd>
+          </div>
+          <div class="stat">
+            <dt>Pending</dt>
+            <dd><span class="stat-num" id="s-pending">0</span></dd>
+            <dd><a class="stat-link" href="bookings.html?status=pending&amp;payment=">View<span class="sr-only"> pending bookings</span></a></dd>
+          </div>
+          <div class="stat">
+            <dt>Awaiting full payment</dt>
+            <dd><span class="stat-num" id="s-unpaid">0</span></dd>
+            <dd><a class="stat-link" href="bookings.html?status=&amp;payment=unpaid">View unpaid<span class="sr-only"> bookings</span></a></dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="section" aria-labelledby="next-h">
+        <h2 id="next-h">Next departures</h2>
+        <div class="panel">
+          <ul class="simple-list" id="upcoming"></ul>
+          <p id="upcoming-empty" class="muted" hidden>No upcoming departures. Add a booking to get started.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="actions-h">
+        <h2 id="actions-h">Quick actions</h2>
+        <ul class="action-list">
+          <li><a class="btn btn-primary" href="booking-form.html">New booking</a></li>
+          <li><a class="btn btn-secondary" href="bookings.html">Find a booking</a></li>
+          <li><a class="btn btn-secondary" href="bookings.html?status=pending&amp;payment=">Review pending bookings</a></li>
+        </ul>
+      </section>
+
+      <section class="section" aria-labelledby="mgr-h" id="manager-panel" hidden>
+        <h2 id="mgr-h">Manager tools</h2>
+        <div class="panel">
+          <p>You can delete bookings from the <a href="bookings.html">bookings list</a>. Deleting asks for confirmation and offers an undo.</p>
+          <p class="muted" id="cancelled-note"></p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>WanderDesk – coursework project for Accessibility and Usability. Demo data only.</p></div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

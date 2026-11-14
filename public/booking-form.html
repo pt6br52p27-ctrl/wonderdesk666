@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New booking – WanderDesk</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="dashboard.html"><span aria-hidden="true">✈</span> WanderDesk</a>
+      <nav aria-label="Main">
+        <ul class="nav-list">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="bookings.html">Bookings</a></li>
+          <li><a href="booking-form.html" id="nav-new" aria-current="page">New booking</a></li>
+        </ul>
+      </nav>
+      <div class="user-area">
+        <p class="user-name">Signed in as <strong id="user-name"></strong></p>
+        <button type="button" class="btn btn-on-dark btn-small" id="signout">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sr-only" id="live-polite" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <main id="main" class="wrap" tabindex="-1">
+    <h1 id="page-title">New booking</h1>
+    <p class="lead" id="page-lead">Fields marked <span class="req" aria-hidden="true">*</span><span class="sr-only">with an asterisk</span> are required.</p>
+
+    <div class="notice-area">
+      <div id="notice" role="status"></div>
+      <div id="notice-alert" role="alert"></div>
+    </div>
+
+    <p class="loading" id="form-loading" hidden><span class="spinner" aria-hidden="true"></span> Loading booking…</p>
+
+    <div id="load-error" class="panel" hidden>
+      <h2>We couldn't open that booking</h2>
+      <p id="load-error-text"></p>
+      <a class="btn btn-primary" href="bookings.html">Back to bookings</a>
+    </div>
+
+    <div id="error-summary" class="error-summary" tabindex="-1" aria-labelledby="error-summary-title" hidden>
+      <h2 id="error-summary-title">There is a problem</h2>
+      <p id="error-summary-count"></p>
+      <ul id="error-summary-list"></ul>
+    </div>
+
+    <form id="booking-form" class="form-card" novalidate>
+
+      <fieldset>
+        <legend>Customer details</legend>
+        <div class="field">
+          <label for="customerName">Full name <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="customerName" name="customerName" autocomplete="off" required aria-required="true"
+                 aria-describedby="customerName-error">
+          <p class="field-error" id="customerName-error" hidden></p>
+        </div>
+        <div class="two-col">
+          <div class="field">
+            <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="off" required aria-required="true"
+                   aria-describedby="email-hint email-error" spellcheck="false">
+            <p class="hint" id="email-hint">Booking confirmations are sent here.</p>
+            <p class="field-error" id="email-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="optional">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" autocomplete="off" aria-describedby="phone-hint phone-error">
+            <p class="hint" id="phone-hint">Include the country code if the customer is abroad.</p>
+            <p class="field-error" id="phone-error" hidden></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Trip details</legend>
+        <div class="field">
+          <label for="destination">Destination <span class="req" aria-hidden="true">*</span></label>
+          <select id="destination" name="destination" required aria-required="true" aria-describedby="destination-error">
+            <option value="">Choose a destination</option>
+            <option>Lisbon, Portugal</option>
+            <option>Kyoto, Japan</option>
+            <option>Marrakech, Morocco</option>
+            <option>Reykjavik, Iceland</option>
+            <option>Cape Town, South Africa</option>
+            <option>Istanbul, Turkey</option>
+            <option>Bali, Indonesia</option>
+            <option>Rome, Italy</option>
+            <option>Cusco, Peru</option>
+            <option>Vancouver, Canada</option>
+            <option>Dubai, UAE</option>
+            <option>Sydney, Australia</option>
+          </select>
+          <p class="field-error" id="destination-error" hidden></p>
+        </div>
+
+        <fieldset class="choice-fieldset">
+          <legend>Trip type</legend>
+          <div class="choice-group">
+            <div class="choice">
+              <input type="radio" id="trip-return" name="tripType" value="return" checked>
+              <label for="trip-return">Return</label>
+            </div>
+            <div class="choice">
+              <input type="radio" id="trip-oneway" name="tripType" value="one-way">
+              <label for="trip-oneway">One way</label>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="two-col">
+          <div class="field">
+            <label for="departureDate">Departure date <span class="req" aria-hidden="true">*</span></label>
+            <input type="date" id="departureDate" name="departureDate" required aria-required="true"
+                   aria-describedby="departureDate-error">
+            <p class="field-error" id="departureDate-error" hidden></p>
+          </div>
+          <div class="field reveal" id="return-group">
+            <label for="returnDate">Return date <span class="req" aria-hidden="true">*</span></label>
+            <input type="date" id="returnDate" name="returnDate" required aria-required="true"
+                   aria-describedby="returnDate-error">
+            <p class="field-error" id="returnDate-error" hidden></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Travellers</legend>
+        <div class="two-col">
+          <div class="field">
+            <label for="adults">Adults <span class="req" aria-hidden="true">*</span></label>
+            <input type="number" id="adults" name="adults" min="1" max="9" step="1" value="1" inputmode="numeric"
+                   required aria-required="true" aria-describedby="adults-hint adults-error">
+            <p class="hint" id="adults-hint">Aged 18 or over. At most 9 travellers per booking.</p>
+            <p class="field-error" id="adults-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="children">Children <span class="optional">(optional)</span></label>
+            <input type="number" id="children" name="children" min="0" max="9" step="1" value="0" inputmode="numeric"
+                   aria-describedby="children-hint children-error">
+            <p class="hint" id="children-hint">Aged under 18.</p>
+            <p class="field-error" id="children-error" hidden></p>
+          </div>
+        </div>
+        <p class="total-line">Total: <output id="total-travellers" for="adults children">1 traveller</output></p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Extras</legend>
+        <div class="choice">
+          <input type="checkbox" id="addon-insurance" name="addOns" value="insurance">
+          <label for="addon-insurance">Travel insurance</label>
+        </div>
+        <div class="choice">
+          <input type="checkbox" id="addon-transfer" name="addOns" value="transfer">
+          <label for="addon-transfer">Airport transfer</label>
+        </div>
+        <div class="choice">
+          <input type="checkbox" id="addon-baggage" name="addOns" value="baggage">
+          <label for="addon-baggage">Extra baggage</label>
+        </div>
+        <div class="choice">
+          <input type="checkbox" id="addon-assistance" name="addOns" value="assistance">
+          <label for="addon-assistance">Special assistance</label>
+        </div>
+        <div class="field reveal" id="assistance-group" hidden>
+          <label for="assistanceDetails">Assistance details <span class="req" aria-hidden="true">*</span></label>
+          <textarea id="assistanceDetails" name="assistanceDetails" rows="3" aria-required="true"
+                    aria-describedby="assistance-hint assistanceDetails-error" disabled></textarea>
+          <p class="hint" id="assistance-hint">For example: wheelchair to the gate, dietary needs, or a hearing loop. Up to 300 characters.</p>
+          <p class="field-error" id="assistanceDetails-error" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Booking status</legend>
+        <div class="two-col">
+          <div class="field">
+            <label for="paymentStatus">Payment</label>
+            <select id="paymentStatus" name="paymentStatus">
+              <option value="unpaid" selected>Unpaid</option>
+              <option value="deposit">Deposit paid</option>
+              <option value="paid">Paid in full</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="status">Booking status</label>
+            <select id="status" name="status">
+              <option value="pending" selected>Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="notes">Notes <span class="optional">(optional)</span></label>
+          <textarea id="notes" name="notes" rows="3" aria-describedby="notes-hint notes-error"></textarea>
+          <p class="hint" id="notes-hint">Internal notes, up to 500 characters.</p>
+          <p class="field-error" id="notes-error" hidden></p>
+        </div>
+        <p class="muted">Booked by: <strong id="booked-by"></strong></p>
+      </fieldset>
+
+      <div class="btn-row">
+        <button type="submit" class="btn btn-primary" id="save-btn">
+          <span class="spinner" aria-hidden="true" hidden></span>
+          <span class="btn-text">Save booking</span>
+        </button>
+        <button type="button" class="btn btn-secondary" id="another-btn">
+          <span class="spinner" aria-hidden="true" hidden></span>
+          <span class="btn-text">Save and add another</span>
+        </button>
+        <a class="btn btn-secondary" href="bookings.html">Cancel</a>
+      </div>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>WanderDesk – coursework project for Accessibility and Usability. Demo data only.</p></div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/form.js"></script>
+</body>
+</html>

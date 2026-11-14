@@ -1,0 +1,18 @@
+{
+  "name": "wanderdesk",
+  "version": "1.0.0",
+  "description": "WanderDesk - an accessible travel-agency booking desk (records management coursework).",
+  "main": "server/server.js",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server/server.js",
+    "seed": "node server/seed.js --force",
+    "seed:large": "node server/seed.js --force --count 500",
+    "test": "node --test test/api.test.js",
+    "check": "node tools/static-checks.js && node tools/contrast.js"
+  },
+  "license": "UNLICENSED"
+}
